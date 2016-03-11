@@ -1,3 +1,5 @@
+# Vim temporary files
+*.sw*
 
 # Bundler
 bin/*
