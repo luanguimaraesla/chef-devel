@@ -25,7 +25,7 @@ gem_package 'bundler'
 
 extracted_redmine_dir = redmine_dir+'redmine-'+version
 
-execute 'install_bundle' do
+execute 'bundle_install' do
   command 'bundle install --without development test'
   cwd extracted_redmine_dir
 end
