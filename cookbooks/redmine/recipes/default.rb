@@ -48,5 +48,9 @@ execute 'database_migration' do
   #RAILS_ENV=production bundle exec rake redmine:load_default_data
 end
 
-
-
+execute "chown-data-www" do
+  command "sudo chown -R www-data files log tmp public/plugin_assets"
+  user "root"
+  cwd extracted_redmine_dir
+end
+ 
