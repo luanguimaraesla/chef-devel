@@ -37,7 +37,10 @@ end
 
 template extracted_redmine_dir+'/'+'config/database.yml' do
   source 'database.yml.erb'
-end  
+  variables({
+    redmine_passwd: node['passwd']['redmine']
+  })
+end
 
 execute 'database_migration' do
   command 'RAILS_ENV=production bundle exec rake db:migrate && \
