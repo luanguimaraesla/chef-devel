@@ -1,3 +1,7 @@
+squid:
+  run_list:
+    - role[squid_server]
+
 redmine:
   run_list:
     - role[redmine_server]
