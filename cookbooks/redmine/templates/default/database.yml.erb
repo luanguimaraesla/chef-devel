@@ -3,5 +3,5 @@ production:
   database: redmine_devel
   host: 10.0.0.138
   username: redmine
-  password: <%= @redmine_passwd %>
+  password: <%= '"' + @redmine_passwd + '"' %>
   encoding: utf8
