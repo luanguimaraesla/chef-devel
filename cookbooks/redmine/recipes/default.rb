@@ -1,9 +1,9 @@
-#install dependencies
 version = '3.2.0'
 url_redmine = "https://www.redmine.org/releases/redmine-#{version}.tar.gz"
 redmine_dir = '/opt/redmine/'
-packages = %w(mysql-client libmysqlclient-dev gcc build-essential zlib1g zlib1g-dev zlibc ruby-zip libssl-dev libyaml-dev libcurl4-openssl-dev ruby gem libapache2-mod-passenger apache2-mpm-prefork apache2-dev libapr1-dev libxslt1-dev checkinstall libxml2-dev ruby-dev vim libmagickwand-dev imagemagick)
 
+#install dependencies
+packages = %w(mysql-client libmysqlclient-dev gcc build-essential zlib1g zlib1g-dev zlibc ruby-zip libssl-dev libyaml-dev libcurl4-openssl-dev ruby gem libapache2-mod-passenger apache2-mpm-prefork apache2-dev libapr1-dev libxslt1-dev checkinstall libxml2-dev ruby-dev vim libmagickwand-dev imagemagick)
 packages.each do |package_name|
   package package_name
 end
