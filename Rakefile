@@ -11,7 +11,7 @@ ENV['CHAKE_SSH_CONFIG'] = ssh_config_file
 require "chake"
 
 ips ||= YAML.load_file(ips_file)
-passwords ||= YAML.load_file(ips_file)
+passwords ||= YAML.load_file(passwd_file)
 
 $nodes.each do |node|
   node.data['peers'] = ips

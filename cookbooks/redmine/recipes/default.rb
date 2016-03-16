@@ -43,8 +43,9 @@ template extracted_redmine_dir+'/'+'config/database.yml' do
 end
 
 execute 'database_migration' do
-  command 'RAILS_ENV=production bundle exec rake db:migrate && \
-	   RAILS_ENV=production bundle exec rake redmine:load_default_data'
+  command 'RAILS_ENV=production bundle exec rake db:migrate'
+  cwd extracted_redmine_dir
+  #RAILS_ENV=production bundle exec rake redmine:load_default_data
 end
 
 
