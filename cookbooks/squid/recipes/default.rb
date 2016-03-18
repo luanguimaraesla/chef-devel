@@ -6,7 +6,7 @@ squid_cache_size = "30000" #MB
 
 # Yum update
 execute "yum_update" do
-  command "sudo yum update"
+  command "sudo yum -y update"
   user "lappis"
 end
 
@@ -30,6 +30,10 @@ execute "add_squid_iptables_rule" do
           "iptables-save > /etc/sysconfig/iptables"
 end
 
+# Install iptables service
+package 'iptables-services'
+
+# Enable iptables on boot and start it
 service "iptables" do
-  action :restart
+  action [:enable,:start]
 end
