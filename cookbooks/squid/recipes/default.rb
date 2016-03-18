@@ -1,5 +1,6 @@
 # Recipe for squid server
 
+# Config: 
 squid_maximum_object_size = "600" #MB
 squid_minimum_object_size = "0" #MB
 squid_cache_size = "30000" #MB
@@ -21,6 +22,11 @@ template squid_conf_file do
     maximum_object_size: squid_maximum_object_size,
     minimum_object_size: squid_minimum_object_size
   })
+end
+
+# Restart squid service
+service "squid" do
+  action :restart
 end
 
 # Enable iptables to listen port 3128
