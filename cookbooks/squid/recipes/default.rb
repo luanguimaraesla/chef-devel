@@ -6,8 +6,7 @@ squid_cache_size = "30000" #MB
 
 # Yum update
 execute "yum_update" do
-  command "sudo yum -y update"
-  user "lappis"
+  command "yum -y update"
 end
 
 # Install Squid
