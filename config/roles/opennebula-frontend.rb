@@ -3,5 +3,5 @@ description "Install and configure OpenNebula Front end"
 
 run_list *[
   'recipe[basics]',
-  'recipe[opennebula]'
+  'recipe[opennebula-frontend]'
 ]
