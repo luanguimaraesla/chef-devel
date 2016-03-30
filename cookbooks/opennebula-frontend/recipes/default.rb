@@ -25,10 +25,13 @@ execute 'sunstone' do
   command 'echo -e 1 "\n" "\n"| /usr/share/one/install_gems'
 end
 
-execute 'external_acess'
+execute 'external_acess' do
   command 'sed -i "s/:host: 127.0.0.1/:host: 0.0.0.0/g" /etc/one/sunstone-server.conf'
 end
 
+service 'opennebula' do
+  action [:enable, :start]
+end
 
 service 'opennebula-sunstone' do
   action [:enable, :start]
