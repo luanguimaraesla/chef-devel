@@ -1,3 +1,7 @@
+boca:
+  run_list:
+    - role[boca_server]
+
 squid:
   run_list:
     - role[squid_server]
