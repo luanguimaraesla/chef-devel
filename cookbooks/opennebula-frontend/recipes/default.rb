@@ -1,13 +1,8 @@
 repo_dir = '/etc/yum.repos.d/opennebula.repo'
-temp_dir = '/tmp'
 package "epel-release"
 
 template repo_dir do 
   source 'opennebula.repo.erb'
-end
-
-template temp_dir + '/entry' do
-  source 'entry.erb'
 end
 
 package 'opennebula-server'
