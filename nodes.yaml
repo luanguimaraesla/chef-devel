@@ -9,3 +9,11 @@ squid:
 redmine:
   run_list:
     - role[redmine_server]
+
+opennebula-frontend:
+  run_list:
+    - role[opennebula-frontend]
+
+opennebula-node:
+  run_list:
+    -role[opennebula-node]
