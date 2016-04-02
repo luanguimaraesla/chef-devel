@@ -11,5 +11,10 @@ Host redmine
   User lappis
 
 Host opennebula-frontend
-   Hostname 10.0.0.149
-   User lappis
+   Hostname 10.0.0.2
+   User root
+
+Host opennebula-node
+   Hostname 10.0.0.7
+   User root
+

@@ -1,4 +1,5 @@
 boca: 10.0.0.147
 squid: 10.0.0.145
 redmine: 10.0.0.141
-opennebula-frontend: 10.0.0.149
+opennebula-frontend: 10.0.0.2
+opennebula-node: 10.0.0.7

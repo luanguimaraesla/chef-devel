@@ -16,4 +16,4 @@ opennebula-frontend:
 
 opennebula-node:
   run_list:
-    -role[opennebula-node]
+    - role[opennebula-node]
