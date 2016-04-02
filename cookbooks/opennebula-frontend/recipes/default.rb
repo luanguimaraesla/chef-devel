@@ -1,4 +1,5 @@
 repo_dir = '/etc/yum.repos.d/opennebula.repo'
+config_ssh_dir = '/var/lib/one/.ssh/config'
 package "epel-release"
 
 template repo_dir do 
@@ -32,11 +33,9 @@ service 'opennebula-sunstone' do
   action [:enable, :start]
 end
  
-#execute "ssh_public_key_permission" do
- # command "cat << EOT > ~/.ssh/config"+
-  #        "Host *
-   #           StrictHostKeyChecking no
-    #          UserKnownHostsFile /dev/null"+
-     #     "EOT"+
-      #    "chmod 600 ~/.ssh/config" 
-#end
+template config_ssh_dir do
+  source 'config.erb'
+  owner 'oneadmin'
+  group 'oneadmin'
+  mode '0600'
+end
