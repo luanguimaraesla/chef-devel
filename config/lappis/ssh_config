@@ -10,7 +10,7 @@ Host redmine
   Hostname 10.0.0.141
   User lappis
 
-Host opennebula-frontend
+Host solarian
    Hostname 10.0.0.2
    User root
 
