@@ -11,8 +11,7 @@ end
 template network_config_dir + "/ifcfg-eth1" do
   source 'ifcfg-eth1.erb'
 end
-
-template network_config_dir + "ifcfg-br0" do
+template network_config_dir + "/ifcfg-br0" do
   source 'ifcfg-br0.erb'
 end
 
