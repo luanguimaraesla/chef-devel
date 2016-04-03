@@ -10,10 +10,18 @@ redmine:
   run_list:
     - role[redmine_server]
 
-opennebula-frontend:
+polaris:
   run_list:
     - role[opennebula-frontend]
+    - role[opennebula-node]
+    - role[polaris] 
 
-opennebula-node:
+solarian:
   run_list:
     - role[opennebula-node]
+    - role[solarian]
+
+imperius:
+  run_list:
+    - role[opennebula-node]
+    - role[imperius]

@@ -1,5 +1,4 @@
 require 'yaml'
-
 environment = "lappis"
 
 ssh_config_file = "config/#{environment}/ssh_config"
@@ -17,3 +16,5 @@ $nodes.each do |node|
   node.data['peers'] = ips
   node.data['passwd'] = passwords
 end
+
+
