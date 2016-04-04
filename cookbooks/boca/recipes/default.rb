@@ -14,12 +14,41 @@ execute "apt-get_update" do
   command "apt-get -y update"
 end
 
-# Execute installer script
-execute 'boca_script' do
-  flags = " alreadydone"
-  command boca_installation_file + flags
-  cwd work_dir
+# Upgrade apt-get
+execute "apt-get_upgrade" do
+  command "apt-get -y upgrade"
 end
+
+# Install python-software-properties
+package 'python-software-properties'
+
+# Remove unecessary packages
+unecessary_packages = %w(libreoffice-common libreoffice-base-core thunderbird
+                         unity-lens-shopping unity-webapps-common)
+
+unecessary_packages.each do |package_to_purge|
+  apt_package package_to_purge do
+    package_name package_to_purge
+    action :purge
+    ignore_failure true
+  end
+end
+
+necessary_packages = %w(sysvinit-utils install zenity apache2 eclipse-pde
+                        eclipse eclipse-rcp eclipse-platform eclipse-jdt eclipse-cdt
+                        emacs evince g++ gcc gedit scite libstdc++6
+                        makepasswd manpages-dev php5-cli php5-mcrypt openjdk-7-dbg
+                        openjdk-7-jdk php5 php5-pgsql postgresql postgresql-client
+                        postgresql-contrib quota sharutils default-jdk
+                        openjdk-7-doc geany geany-plugin-addons
+                        geany-plugins geany-plugin-debugger default-jre sysstat vim
+                        xfce4 php5-gd debootstrap schroot libgnomekbd-common)
+
+necessary_packages.each do |package_to_install|
+  package package_to_install
+end
+
+
 
 # Reboot virtual machine
 reboot 'now' do
@@ -27,5 +56,3 @@ reboot 'now' do
   reason 'Boca needs to reboot'
   delay_mins 1
 end
-
-
