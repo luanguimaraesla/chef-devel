@@ -1,13 +1,5 @@
 # Configurations
-url_download_installation_file = "http://www.ime.usp.br/~cassio/boca/download.php?filename=installv2.sh"
 work_dir = "/home/lappis/"
-boca_installation_file = "install_boca.sh"
-
-# Download installer
-remote_file work_dir + boca_installation_file do
-  source url_download_installation_file
-  mode '0755'
-end
 
 # Update apt-get
 execute "apt-get_update" do
@@ -36,19 +28,25 @@ end
 
 necessary_packages = %w(sysvinit-utils install zenity apache2 eclipse-pde
                         eclipse eclipse-rcp eclipse-platform eclipse-jdt eclipse-cdt
-                        emacs evince g++ gcc gedit scite libstdc++6
-                        makepasswd manpages-dev php5-cli php5-mcrypt openjdk-7-dbg
+                        evince g++ gcc scite libstdc++6
+                        manpages-dev php5-cli php5-mcrypt openjdk-7-dbg
                         openjdk-7-jdk php5 php5-pgsql postgresql postgresql-client
                         postgresql-contrib quota sharutils default-jdk
                         openjdk-7-doc geany geany-plugin-addons
-                        geany-plugins geany-plugin-debugger default-jre sysstat vim
-                        xfce4 php5-gd debootstrap schroot libgnomekbd-common)
+                        geany-plugins geany-plugin-debugger default-jre sysstat
+                        xfce4 php5-gd debootstrap schroot)
 
 necessary_packages.each do |package_to_install|
   package package_to_install
 end
 
-
+# Create boca admin
+user 'icpc' do
+  comment 'boca admin'
+  home '/home/icpc'
+  shell '/bin/bash'
+  password node['passwd']['boca']
+end
 
 # Reboot virtual machine
 reboot 'now' do
