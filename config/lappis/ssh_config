@@ -25,3 +25,7 @@ Host imperius
 Host firewall
   Hostname 10.0.0.155
   User lappis
+
+Host backup-lappis
+  Hostname 10.0.0.156
+  User root
