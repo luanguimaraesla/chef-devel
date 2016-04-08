@@ -4,3 +4,5 @@ redmine: 10.0.0.141
 solarian: 10.0.0.2
 polaris: 10.0.0.7
 imperius: 10.0.0.5
+firewall: 10.0.0.155
+backup-lappis: 10.0.0.156

@@ -21,3 +21,11 @@ Host polaris
 Host imperius
   Hostname 10.0.0.5
   User root
+
+Host firewall
+  Hostname 10.0.0.155
+  User lappis
+
+Host backup-lappis
+  Hostname 10.0.0.156
+  User root

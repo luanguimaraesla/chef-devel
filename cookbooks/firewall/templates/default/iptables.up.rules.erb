@@ -1,0 +1,82 @@
+#!/bin/bash
+
+# Elimina toda as regras da tabela de NAT
+iptables -t nat -F
+
+#iptables -t nat -A PREROUTING -p tcp -d 164.41.86.16 --dport 21 -j DNAT --to 10.0.0.135:22
+#iptables -t nat -A PREROUTING -p tcp -d 10.0.0.135 --dport 80 -j DNAT --to 10.0.0.54:80
+#iptables -t nat -A PREROUTING -p tcp -d 10.0.0.135 --dport 80 -j DNAT --to 10.0.0.54:80
+#iptables -t nat -A PREROUTING -p tcp --dport 80 -j DNAT --to-destination 10.0.0.54:80
+
+
+#softwarepublico.lappis
+iptables -t nat -A PREROUTING -p tcp -d 164.41.86.14 --dport 80 -j DNAT --to-destination 10.0.0.54:80
+iptables -t nat -A POSTROUTING -p tcp -d 10.0.0.54 --dport 80 -j SNAT --to-source 164.41.86.14
+
+iptables -t nat -A PREROUTING -p tcp -d 164.41.86.14 --dport 443 -j DNAT --to-destination 10.0.0.54:443
+iptables -t nat -A POSTROUTING -p tcp -d 10.0.0.54 --dport 443 -j SNAT --to-source 164.41.86.14
+
+#softwarepublico.lappis2
+iptables -t nat -A PREROUTING -p tcp -d 164.41.86.17 --dport 80 -j DNAT --to-destination 10.0.0.32:80
+iptables -t nat -A POSTROUTING -p tcp -d 10.0.0.32 --dport 80 -j SNAT --to-source 164.41.86.17
+
+iptables -t nat -A PREROUTING -p tcp -d 164.41.86.17 --dport 443 -j DNAT --to-destination 10.0.0.32:443
+iptables -t nat -A POSTROUTING -p tcp -d 10.0.0.32 --dport 443 -j SNAT --to-source 164.41.86.17
+
+#softwarepublico.lappis3
+iptables -t nat -A PREROUTING -p tcp -d 164.41.86.14 --dport 80 -j DNAT --to-destination 10.0.0.24:80
+iptables -t nat -A POSTROUTING -p tcp -d 10.0.0.24 --dport 80 -j SNAT --to-source 164.41.86.14
+
+iptables -t nat -A PREROUTING -p tcp -d 164.41.86.14 --dport 443 -j DNAT --to-destination 10.0.0.24:443
+iptables -t nat -A POSTROUTING -p tcp -d 10.0.0.24 --dport 443 -j SNAT --to-source 164.41.86.14
+
+#Mirror
+iptables -t nat -A PREROUTING -p tcp -d 164.41.86.15 --dport 80 -j DNAT --to-destination 10.0.0.132:80
+iptables -t nat -A POSTROUTING -p tcp -d 10.0.0.132 --dport 80 -j SNAT --to-source 164.41.86.15
+
+#lappis.unb.br
+iptables -t nat -A PREROUTING -p tcp -d 164.41.86.12 --dport 80 -j DNAT --to-destination 10.0.0.134:80
+iptables -t nat -A POSTROUTING -p tcp -d 10.0.0.134 --dport 80 -j SNAT --to-source 164.41.86.12
+
+# Acesso à central
+# O acesso à máquina central foi substituido pelo acesso à services
+#iptables -t nat -A PREROUTING -p tcp -d 164.41.86.14 --dport 21 -j DNAT --to-destination 10.0.0.56:22
+#iptables -t nat -A POSTROUTING -p tcp -d 10.0.0.56 --dport 22 -j SNAT --to-source 164.41.86.14
+
+
+#Acesso ao mirror
+iptables -t nat -A PREROUTING -p tcp -d 164.41.86.15 --dport 21 -j DNAT --to-destination 10.0.0.7:22
+iptables -t nat -A POSTROUTING -p tcp -d 10.0.0.7 --dport 22 -j SNAT --to-source 164.41.86.15
+
+#Acesso a services
+iptables -t nat -A PREROUTING -p tcp -d 164.41.86.12 --dport 21 -j DNAT --to-destination 10.0.0.135:22
+iptables -t nat -A POSTROUTING -p tcp -d 10.0.0.135 --dport 22 -j SNAT --to-source 164.41.86.12
+
+#moodle
+iptables -t nat -A PREROUTING -p tcp -d 164.41.86.14 --dport 8080 -j DNAT --to-destination 10.0.0.4:8080
+iptables -t nat -A POSTROUTING -p tcp -d 10.0.0.4 --dport 8080 -j SNAT --to-source 164.41.86.14
+
+#backup-lappis
+iptables -t nat -A PREROUTING -p tcp -d 164.41.86.17 --dport 21 -j DNAT --to-destination 10.0.0.15:22
+iptables -t nat -A POSTROUTING -p tcp -d 10.0.0.15 --dport 22 -j SNAT --to-source 164.41.86.17
+
+
+# Acesso ao participa
+# Alterar a porta de acordo com o serviço
+iptables -t nat -A PREROUTING -p tcp -d 164.41.86.16 --dport 80 -j DNAT --to-destination 10.0.0.9:80
+iptables -t nat -A POSTROUTING -p tcp -d 10.0.0.9 --dport 80 -j SNAT --to-source 164.41.86.16
+
+iptables -t nat -A PREROUTING -p tcp -d 164.41.86.16 --dport 21 -j DNAT --to-destination 10.0.0.9:22
+iptables -t nat -A POSTROUTING -p tcp -d 10.0.0.9 --dport 22 -j SNAT --to-source 164.41.86.16
+
+
+iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
+iptables -P INPUT ACCEPT
+iptables -A INPUT -i lo -j ACCEPT
+iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+iptables -A INPUT -p tcp --dport 21 -j ACCEPT
+iptables -A INPUT -p tcp --dport 80 -j ACCEPT
+iptables -A INPUT -p tcp --dport 443 -j ACCEPT
+#COMMIT
+
+

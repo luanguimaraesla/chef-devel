@@ -25,3 +25,13 @@ imperius:
   run_list:
     - role[opennebula-node]
     - role[imperius]
+
+firewall:
+  run_list:
+    - role[firewall]	
+
+backup_lappis:
+  run_list:
+    - role[backup-lappis]
+
+
