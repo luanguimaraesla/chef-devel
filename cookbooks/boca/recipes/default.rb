@@ -40,12 +40,40 @@ necessary_packages.each do |package_to_install|
   package package_to_install
 end
 
+execute 'apt-get autoremove' do
+  command 'apt-get -y autoremove'
+end
+
+execute 'apt-get clean' do
+  command 'apt-get -y clean'
+end
+
 # Create boca admin
 user 'icpc' do
   comment 'boca admin'
   home '/home/icpc'
   shell '/bin/bash'
   password node['passwd']['boca']
+end
+
+directory '/etc/icpc' do
+  owner 'root'
+  group 'root'
+  mode '0755'
+  action :create
+end
+
+remote_file '/tmp/.boca.version' do
+  source 'http://www.ime.usp.br/~cassio/boca/icpc.etc.ver.txt'
+  mode '0755'
+end
+
+boca_version = File.read("/tmp/.boca.version")
+
+remote_file '/tmp/icpc.etc.tgz' do
+  source "http://www.ime.usp.br/~cassio/boca/download.php?"\
+         "filename=icpc-#{boca_version}.etc.tgz"
+  mode '0755'
 end
 
 # Reboot virtual machine
