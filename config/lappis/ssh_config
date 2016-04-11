@@ -29,3 +29,8 @@ Host firewall
 Host backup-lappis
   Hostname 10.0.0.156
   User root
+
+Host dotproject
+  Hostname 10.0.0.140
+  User root
+
