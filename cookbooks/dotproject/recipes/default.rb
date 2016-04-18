@@ -3,6 +3,8 @@ url_dotproject = "http://tenet.dl.sourceforge.net/project/dotproject/dotproject/
 dotproject_extracted_dir = '/var/www/'
 dotproject_dir = '/var/www/dotproject'
 packages = %w(mysql-server mysql-client php5 php5-mysql unzip libphp-jpgraph libgd-tools)
+apache_config_dir = '/etc/apache2/sites-available/000-default.conf'
+apache_redirect_dir = '/var/www/.htaccess'
 
 execute 'update' do
   command "apt-get update"
@@ -12,6 +14,28 @@ end
 
 packages.each do |package_name|
   package package_name
+end
+
+cookbook_file apache_config_dir do
+  source '000-default.conf'
+  action :create 
+end
+
+cookbook_file apache_redirect_dir do
+  source 'htaccess'
+  action :create
+end
+
+execute 'enable_mod_rewrite_apache' do
+  command "a2enmod rewrite"
+end  
+
+execute 'enable_proxy_apache' do
+  command "a2enmod proxy"
+end
+
+execute 'proxy_http' do
+  command "a2enmod proxy_http"
 end
 
 remote_file dotproject_extracted_dir+'dotproject.tar.gz' do

@@ -30,7 +30,7 @@ firewall:
   run_list:
     - role[firewall]	
 
-backup_lappis:
+backup-lappis:
   run_list:
     - role[backup-lappis]
 
