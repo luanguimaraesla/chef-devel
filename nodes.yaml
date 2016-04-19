@@ -38,4 +38,7 @@ dotproject:
   run_list:
     - role[dotproject_server]
 
+mysql:
+  run_list:
+    - role[mysql]
 

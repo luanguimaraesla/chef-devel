@@ -34,3 +34,6 @@ Host dotproject
   Hostname 10.0.0.140
   User root
 
+Host mysql
+  Hostname 10.0.0.143
+  User root
