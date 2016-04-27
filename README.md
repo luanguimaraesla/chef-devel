@@ -1,2 +1,3 @@
-# chef-lappis
-Repositório cotendo receitas referentes a infraestrutura do lappis
+## chef-lappis
+
+This repository contains some chef recipes to automate a bunch of tasks to setting up the LAPPIS infrastructure.
