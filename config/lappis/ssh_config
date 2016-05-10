@@ -8,7 +8,7 @@ Host squid
 
 Host redmine
   Hostname 10.0.0.141
-  User lappis
+  User root
 
 Host solarian
    Hostname 10.0.0.2
@@ -23,8 +23,8 @@ Host imperius
   User root
 
 Host firewall
-  Hostname 10.0.0.155
-  User lappis
+  Hostname 10.0.0.150
+  User root
 
 Host backup-lappis
   Hostname 10.0.0.156

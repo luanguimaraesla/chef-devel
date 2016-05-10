@@ -6,11 +6,15 @@ execute "enable_IP_forwading " do
 end
 
 #Execute forwading ip
-execute "forwading ip"
+execute "forwading ip" do
   command "sudo sysctl -p"
+end
 
 template iptables_dir do
   source "iptables.up.rules.erb"
+  variables({
+    ips: node['peers']
+  })
 end
 
 #Enable script
