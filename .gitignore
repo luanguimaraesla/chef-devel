@@ -1,6 +1,9 @@
 # Vim temporary files
 *.sw*
 
+boca.sh
+test.rb
+
 # Bundler
 bin/*
 .bundle/*

@@ -63,13 +63,12 @@ directory '/etc/icpc' do
   action :create
 end
 
-remote_file '/tmp/.boca.version' do
-  source 'http://www.ime.usp.br/~cassio/boca/icpc.etc.ver.txt'
-  mode '0755'
-end
+# Get the boca current version
+require 'open-uri'
+boca_version = open("http://www.ime.usp.br/~cassio/boca/icpc.etc.ver.txt") { |f| f.read }
+boca_version.delete!("\n")
 
-boca_version = File.read("/tmp/.boca.version")
-
+# Download boca
 remote_file '/tmp/icpc.etc.tgz' do
   source "http://www.ime.usp.br/~cassio/boca/download.php?"\
          "filename=icpc-#{boca_version}.etc.tgz"
