@@ -75,9 +75,11 @@ remote_file '/tmp/icpc.etc.tgz' do
   mode '0755'
 end
 
+
+
 # Reboot virtual machine
-reboot 'now' do
-  action :restart_now
-  reason 'Boca needs to reboot'
-  delay_mins 1
-end
+#reboot 'now' do
+#  action :restart_now
+#  reason 'Boca needs to reboot'
+#  delay_mins 1
+#end
