@@ -26,15 +26,14 @@ unecessary_packages.each do |package_to_purge|
   end
 end
 
-necessary_packages = %w(sysvinit-utils install zenity apache2 eclipse-pde
-                        eclipse eclipse-rcp eclipse-platform eclipse-jdt eclipse-cdt
+necessary_packages = %w(sysvinit-utils zenity apache2 eclipse-pde
                         evince g++ gcc scite libstdc++6
                         manpages-dev php5-cli php5-mcrypt openjdk-7-dbg
                         openjdk-7-jdk php5 php5-pgsql postgresql postgresql-client
                         postgresql-contrib quota sharutils default-jdk
                         openjdk-7-doc geany geany-plugin-addons
                         geany-plugins geany-plugin-debugger default-jre sysstat
-                        xfce4 php5-gd debootstrap schroot)
+                        php5-gd debootstrap schroot)
 
 necessary_packages.each do |package_to_install|
   package package_to_install
