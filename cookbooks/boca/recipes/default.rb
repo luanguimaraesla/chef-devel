@@ -26,14 +26,13 @@ unecessary_packages.each do |package_to_purge|
   end
 end
 
-necessary_packages = %w(sysvinit-utils zenity apache2 eclipse-pde
-                        evince g++ gcc scite libstdc++6
-                        manpages-dev php5-cli php5-mcrypt openjdk-7-dbg
+necessary_packages = %w(build-essential ruby-all-dev sysvinit-utils zenity apache2 eclipse-pde
+                        python-pip evince g++ gcc libstdc++6 manpages-dev
+                        makepasswd php5-cli php5-mcrypt openjdk-7-dbg
                         openjdk-7-jdk php5 php5-pgsql postgresql postgresql-client
                         postgresql-contrib quota sharutils default-jdk
-                        openjdk-7-doc geany geany-plugin-addons
-                        geany-plugins geany-plugin-debugger default-jre sysstat
-                        php5-gd debootstrap schroot)
+                        openjdk-7-doc default-jre sysstat
+                        default-jre sysstat php5-gd debootstrap schroot)
 
 necessary_packages.each do |package_to_install|
   package package_to_install
@@ -52,6 +51,7 @@ user 'icpc' do
   comment 'boca admin'
   home '/home/icpc'
   shell '/bin/bash'
+  not_if "cat /etc/group | grep icpc | wc -l"
   password node['passwd']['boca']
 end
 
@@ -74,11 +74,83 @@ remote_file '/tmp/icpc.etc.tgz' do
   mode '0755'
 end
 
+execute 'decompress icpc.etc.tgz' do
+  cwd '/tmp/'
+  command 'tar -xvzf icpc.etc.tgz -C /etc/'
+end
 
+bash 'configure permissions' do
+  cwd "/tmp/"
+  code <<-EOH
+    for i in `tar tvzf /tmp/icpc.etc.tgz | awk '{ print $6; }'`; do
+      chown root.root /etc/$i
+      chmod o-w,u+rx /etc/$i
+    done
+  EOH
+end
 
-# Reboot virtual machine
-#reboot 'now' do
-#  action :restart_now
-#  reason 'Boca needs to reboot'
-#  delay_mins 1
-#end
+service 'procps' do
+  action :start
+end
+
+bash 'setup user quota' do
+  cwd 'tmp/'
+  code <<-EOH
+    mount / -o remount
+    quotaoff -a 2>/dev/null
+    quotacheck -M -a
+    quotaon -a
+    setquota -u postgres 0 3000000 0 10000 -a
+    setquota -u icpc 0 500000 0 10000 -a
+    setquota -u nobody 0 500000 0 10000 -a
+    setquota -u www-data 0 1500000 0 10000 -a
+  EOH
+end
+
+execute 'update rc.local' do
+  command "update-rc.d -f cups remove"
+end
+
+execute 'apt-get clean' do
+  command "apt-get -y clean"
+end
+
+execute 'icpc restart' do
+  cwd '/etc/icpc/'
+  command "./restart.sh"
+end
+
+execute 'pip install pexpect' do
+  command 'pip install pexpect'
+end
+
+python 'run installboca.sh' do
+  cwd '/etc/icpc/'
+  code <<-EOH
+import pexpect
+import sys
+from time import sleep
+
+child = pexpect.spawn('/bin/bash', ['-c', './installboca.sh'])
+child.logfile = sys.stdout
+
+child.expect('I will install boca at /var/www is it correct[.]*')
+child.sendline('y')
+
+child.expect('Do you want me to call the script to make this computer the server[.]*')
+child.sendline('y')
+
+child.expect('Do you really want to make this computer the server?[.]*')
+child.sendline('y')
+
+child.expect('.*Want a random password.*')
+child.sendline('Y')
+
+child.expect('.*Type YES and press return to continue.*')
+child.sendline('YES\n')
+
+sleep(15)
+
+print("THIS IS THE END")
+  EOH
+end

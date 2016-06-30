@@ -2,4 +2,4 @@
 redmine: <password>
 mysql: <password>
 dotproject: <password>
-boca: <password>
+boca: "1234boca"

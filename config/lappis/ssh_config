@@ -1,5 +1,5 @@
 Host boca
-  Hostname 10.0.0.147
+  Hostname 10.0.0.163
   User lappis
 
 Host squid
