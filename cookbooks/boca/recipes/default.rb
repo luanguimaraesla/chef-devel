@@ -151,10 +151,10 @@ child.sendline("YES")
 
 sleep(15)
 
-print("THIS IS THE END")
+print("FINISHING...")
   EOH
 end
 
 service "apache2" do
-  actipon :restart
+  action :restart
 end
