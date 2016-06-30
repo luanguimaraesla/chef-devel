@@ -147,10 +147,14 @@ child.expect('.*Want a random password.*')
 child.sendline('Y')
 
 child.expect('.*Type YES and press return to continue.*')
-child.sendline('YES\n')
+child.sendline("YES")
 
 sleep(15)
 
 print("THIS IS THE END")
   EOH
+end
+
+service "apache2" do
+  actipon :restart
 end
