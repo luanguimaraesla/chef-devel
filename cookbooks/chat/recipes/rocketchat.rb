@@ -63,9 +63,9 @@ execute "download stable version of rocket.chat" do
 end
 
 execute "untar the binary release" do
-  pwd "/root"
+  cwd "/root"
   command "tar zxvf rocket.chat.tgz"
-#  command "rm /root/rocket.chat.tgz"
+  command "rm rocket.chat.tgz"
 end
 
 execute "add mongo environment variable" do
