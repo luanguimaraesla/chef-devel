@@ -14,7 +14,7 @@ end
 execute "add mongodb repository" do
   command 'echo "deb http://repo.mongodb.org/apt/debian wheezy/mongodb-org/3.0 main" |
                 sudo tee /etc/apt/sources.list.d/mongodb-org-3.0.list'
-  not_if 'echo -o -P "mongodb-org" | wc -l'
+  not_if File.exists? "/etc/apt/sources.list.d/mongodb-org-3.0.list"
 end
 
 execute "update apt" do
@@ -37,7 +37,7 @@ end
 
 execute "configure mongo" do
   command 'echo "replication:\n\treplSetName:  \"001-rs\"" >> /etc/mongod.conf'
-  not_if 'echo -o -P "replSetName:" | wc -l'
+  not_if 'echo -o -P "replSetName:" /etc/mongod.conf | wc -l'
 end
 
 service "mongod" do
@@ -51,7 +51,7 @@ end
 execute "add mongo environment variable" do
   command 'echo "export MONGO_OPLOG_URL=mongodb://localhost:27017/local" >> /etc/environment'
   command 'export MONGO_OPLOG_URL=mongodb://localhost:27017/local'
-  only_if 'echo -o -P "MONGO_OPLOG_URL" | wc -l'
+  not_if 'echo -o -P "MONGO_OPLOG_URL" /etc/environment | wc -l'
 end
 
 ENV['MONGO_OPLOG_URL'] = "mongodb://localhost:27017/local"
@@ -71,7 +71,7 @@ execute "add mongo environment variable" do
   command "echo \"export ROOT_URL=#{external_address}\" >> /etc/environment"
   command 'echo "export MONGO_URL=mongodb://localhost:27017/rocketchat" >> /etc/environment'
   command 'echo "export PORT=80" >> /etc/environment'
-  only_if 'echo -o -P "ROOT_URL" | wc -l'
+  not_if 'echo -o -P "ROOT_URL" /etc/environment | wc -l'
 end
 
 ENV['ROOT_URL'] = external_address
