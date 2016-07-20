@@ -64,7 +64,7 @@ end
 
 execute "untar the binary release" do
   command "tar zxvf /root/rocket.chat.tgz"
-  command "rm /root/rocket.chat.tgz"
+#  command "rm /root/rocket.chat.tgz"
 end
 
 execute "add mongo environment variable" do
