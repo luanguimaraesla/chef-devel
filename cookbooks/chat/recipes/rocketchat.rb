@@ -63,7 +63,8 @@ execute "download stable version of rocket.chat" do
 end
 
 execute "untar the binary release" do
-  command "tar zxvf /root/rocket.chat.tgz"
+  pwd "/root"
+  command "tar zxvf rocket.chat.tgz"
 #  command "rm /root/rocket.chat.tgz"
 end
 
