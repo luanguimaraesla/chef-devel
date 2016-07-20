@@ -23,6 +23,10 @@ end
 
 packages = %w(mongodb-org curl graphicsmagick npm nodejs build-essential)
 
+packages.each do |p|
+  package p
+end
+
 execute "install tool to change node version" do
   command "npm install -g n"
 end
