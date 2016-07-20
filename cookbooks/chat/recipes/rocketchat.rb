@@ -35,6 +35,10 @@ execute "change node version to the least" do
   command "n 0.10.40"
 end
 
+execute "install tool to change node version" do
+  command "npm install -g node-gyp"
+end
+
 execute "configure mongo" do
   command 'echo "replication:\n\treplSetName:  \"001-rs\"" >> /etc/mongod.conf'
   not_if 'echo -o -P "replSetName:" /etc/mongod.conf | wc -l'
