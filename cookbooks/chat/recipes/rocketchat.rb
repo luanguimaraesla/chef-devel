@@ -59,12 +59,12 @@ ENV['MONGO_OPLOG_URL'] = "mongodb://localhost:27017/local"
 # INSTALL ROCKET.CHAT
 
 execute "download stable version of rocket.chat" do
-  command "curl -L https://rocket.chat/releases/latest/download -o rocket.chat.tgz"
+  command "curl -L https://rocket.chat/releases/latest/download -o /root/rocket.chat.tgz"
 end
 
 execute "untar the binary release" do
-  command "tar zxvf rocket.chat.tgz"
-  command "rm rocket.chat.tgz"
+  command "tar zxvf /root/rocket.chat.tgz"
+  command "rm /root/rocket.chat.tgz"
 end
 
 execute "add mongo environment variable" do
@@ -79,15 +79,16 @@ ENV['MONGO_URL'] = "mongodb://localhost:27017/rocketchat"
 ENV['PORT'] = "80"
 
 execute "rename Rocket.Chat directory" do
+  cwd "/root/"
   command "mv bundle Rocket.Chat"
 end
 
 execute "install Rocket.Chat" do
-  cwd "Rocket.Chat/programs/server"
+  cwd "/root/Rocket.Chat/programs/server"
   command "npm install"
 end
 
-execute "rum Rocket.Chat" do
-  cwd "Rocker.Chat"
+execute "run Rocket.Chat" do
+  cwd "/root/Rocker.Chat"
   command "node main.js"
 end
