@@ -2,6 +2,10 @@ boca:
   run_list:
     - role[boca_server]
 
+rocketchat:
+  run_list:
+    - role[rocketchat_server]
+
 squid:
   run_list:
     - role[squid_server]

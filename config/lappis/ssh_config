@@ -37,3 +37,7 @@ Host dotproject
 Host mysql
   Hostname 10.0.0.143
   User root
+
+Host rocketchat
+  Hostname 10.0.0.165
+  User lappis
