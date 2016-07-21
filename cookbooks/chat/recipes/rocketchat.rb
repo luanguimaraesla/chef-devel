@@ -37,7 +37,7 @@ execute "change node version to the least" do
 end
 
 execute "configure mongo" do
-  command 'echo "replication:\n\treplSetName:  \"001-rs\"" >> /etc/mongod.conf'
+  command 'echo "replication:\n  replSetName:  \"001-rs\"" >> /etc/mongod.conf'
   not_if 'echo -o -P "replSetName:" /etc/mongod.conf | wc -l'
 end
 
