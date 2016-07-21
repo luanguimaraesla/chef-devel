@@ -21,6 +21,7 @@ execute "update apt" do
   command "apt-get update"
 end
 
+
 packages = %w(mongodb-org curl graphicsmagick npm nodejs build-essential)
 
 packages.each do |p|
@@ -33,10 +34,6 @@ end
 
 execute "change node version to the least" do
   command "n 0.10.40"
-end
-
-execute "install tool to change node version" do
-  command "npm install -g node-gyp"
 end
 
 execute "configure mongo" do
@@ -66,10 +63,11 @@ execute "download stable version of rocket.chat" do
   command "curl -L https://rocket.chat/releases/latest/download -o /root/rocket.chat.tgz"
 end
 
+
 execute "untar the binary release" do
   cwd "/root"
   command "tar zxvf rocket.chat.tgz"
-  command "rm rocket.chat.tgz"
+#  command "rm rocket.chat.tgz"
 end
 
 execute "add mongo environment variable" do
@@ -83,9 +81,25 @@ ENV['ROOT_URL'] = external_address
 ENV['MONGO_URL'] = "mongodb://localhost:27017/rocketchat"
 ENV['PORT'] = "80"
 
+execute "remove old Rocket.Chat dir" do
+  command "rm -rf /root/Rocket.Chat/"
+end
+
+execute "fix npm missing package" do
+  command "npm install fibers@1.0.5 -g"
+end
+
 execute "rename Rocket.Chat directory" do
   cwd "/root/"
   command "mv bundle Rocket.Chat"
+end
+
+execute "mkdir of npm modules" do
+  command "mkdir -p /root/Rocket.Chat/programs/server/node_modules/fibers/"
+end
+
+execute "copy fiber binary" do
+  command "cp -ar /usr/local/lib/node_modules/fibers/ /root/Rocket.Chat/programs/server/node_modules/"
 end
 
 execute "install Rocket.Chat" do
@@ -94,6 +108,6 @@ execute "install Rocket.Chat" do
 end
 
 execute "run Rocket.Chat" do
-  cwd "/root/Rocker.Chat"
+  cwd "/root/Rocket.Chat"
   command "node main.js"
 end
