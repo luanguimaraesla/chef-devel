@@ -95,6 +95,14 @@ execute "fix npm missing package" do
   command "npm install fibers@1.0.5 -g"
 end
 
+execute "remove old Rocket.Chat dir" do
+  command "rm -rf /root/Rocket.Chat/"
+end
+
+execute "fix npm missing package" do
+  command "npm install fibers@1.0.5 -g"
+end
+
 execute "rename Rocket.Chat directory" do
   cwd "/root/"
   command "mv bundle Rocket.Chat"
