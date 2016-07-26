@@ -60,13 +60,6 @@ execute "initiate the replica set" do
   command 'mongo --eval "rs.initiate()"'
 end
 
-execute "add mongo environment variable" do
-  command 'echo "export MONGO_OPLOG_URL=mongodb://localhost:27017/local" >> /etc/environment'
-  command 'export MONGO_OPLOG_URL=mongodb://localhost:27017/local'
-  not_if 'grep -q "MONGO_OPLOG_URL" /etc/environment'
-end
-
-
 # INSTALL ROCKET.CHAT
 
 execute "download stable version of rocket.chat" do
@@ -78,21 +71,6 @@ execute "untar the binary release" do
   cwd "/root"
   command "tar zxvf rocket.chat.tgz"
 #  command "rm rocket.chat.tgz"
-end
-
-execute "add mongo environment variable" do
-  command "echo \"export ROOT_URL=#{external_address}\" >> /etc/environment"
-  command 'echo "export MONGO_URL=mongodb://localhost:27017/rocketchat" >> /etc/environment'
-  command 'echo "export PORT=80" >> /etc/environment'
-  not_if 'grep -q "ROOT_URL" /etc/environment'
-end
-
-execute "remove old Rocket.Chat dir" do
-  command "rm -rf /root/Rocket.Chat/"
-end
-
-execute "fix npm missing package" do
-  command "npm install fibers@1.0.5 -g"
 end
 
 execute "remove old Rocket.Chat dir" do
@@ -121,12 +99,21 @@ execute "install Rocket.Chat" do
   command "npm install"
 end
 
+template '/etc/init.d/rocketchat' do
+  source 'rocketchat.erb'
+  variables({
+    external_address: node.rocketchat.initd.external_address,
+    mongo_url: node.rocketchat.initd.mongo_url,
+    port: node.rocketchat.initd.port,
+    mongo_oplog_url: node.rocketchat.initd.mongo_oplog_url
+  })
+end
+
+# Enable service
 execute "run Rocket.Chat" do
-  ENV['ROOT_URL'] = external_address
-  ENV['MONGO_URL'] = "mongodb://localhost:27017/rocketchat"
-  ENV['PORT'] = "80"
-  ENV['MONGO_OPLOG_URL'] = "mongodb://localhost:27017/local"
-  cwd "/root/Rocket.Chat"
-  command "tmux new-session -s rocketchat -d &&
-	   tmux send-keys -t rocketchat 'node main.js' enter"
+  command "update-rc.d rocketchat enable"
+end
+
+service "rocketchat" do
+  action :start
 end
