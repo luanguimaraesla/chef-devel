@@ -5,6 +5,7 @@ boca:
 rocketchat:
   run_list:
     - role[rocketchat_server]
+    - role[hubot_server]
 
 squid:
   run_list:
