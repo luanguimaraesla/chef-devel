@@ -101,6 +101,7 @@ end
 
 template '/etc/init.d/rocketchat' do
   source 'rocketchat/rocketchat.erb'
+  mode '0755'
   variables({
     external_address: node.rocketchat.initd.external_address,
     mongo_url: node.rocketchat.initd.mongo_url,
@@ -109,11 +110,13 @@ template '/etc/init.d/rocketchat' do
   })
 end
 
-# Enable service
-execute "run Rocket.Chat" do
-  command "update-rc.d rocketchat enable"
+cookbook_file '/lib/systemd/system/rocketchat.service' do
+  source 'rocketchat/rocketchat.service'
+  owner 'root'
+  group 'root'
+  mode '0644'
 end
 
-service "rocketchat" do
-  action :start
+service 'rocketchat' do
+  action [:restart, :enable]
 end
