@@ -15,8 +15,6 @@ execute 'purge other docker repos' do
   command 'apt-get purge docker.io*'
 end
 
-package 'docker.io'
-
 execute 'apt-get update'
 
-
+package 'docker.io'
