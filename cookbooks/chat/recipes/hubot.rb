@@ -6,14 +6,19 @@ git '/root/hubot-rocketchat' do
   action :sync
 end
 
-execute 'enable jessie backport' do
-  command 'echo "deb http://http.debian.net/debian jessie-backports main" > /etc/apt/sources.list.d/backports.list'
+file '/etc/apt/sources.list.d/backports.list' do
+  content 'deb http://http.debian.net/debian'
+  user 'root'
+  group 'root'
+  mode '0644'
+  action :create_if_missing
 end
 
 execute 'purge other docker repos' do
   command 'apt-get purge lxc-docker*'
   command 'apt-get purge docker.io*'
 end
+
 
 execute 'apt-get update'
 
