@@ -100,7 +100,7 @@ execute "install Rocket.Chat" do
 end
 
 template '/etc/init.d/rocketchat' do
-  source 'rocketchat.erb'
+  source 'rocketchat/rocketchat.erb'
   variables({
     external_address: node.rocketchat.initd.external_address,
     mongo_url: node.rocketchat.initd.mongo_url,
