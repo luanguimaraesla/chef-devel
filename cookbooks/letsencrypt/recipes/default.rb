@@ -2,7 +2,7 @@
 
 execute 'apt-get update'
 
-packages = %w(nginx hit bc)
+packages = %w(nginx git bc)
 
 packages.each do |a|
   package a
@@ -24,3 +24,13 @@ service 'nginx' do
   action :reload
 end
 
+crt_domains = ''
+node['crt_domains'].each do |key, value|
+  crt_domains += " -d #{value}"
+end
+
+execute 'create certificate' do
+  command "./letsencrypt-auto certonly -a webroot --renew-by-default --email lappis.unb@gmail.com\
+           --webroot-path=/var/www/html#{crt_domains} --agree-tos"
+  cwd '/opt/letsencrypt'
+end

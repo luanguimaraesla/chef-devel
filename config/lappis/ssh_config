@@ -1,6 +1,7 @@
 Host letsencrypt
-  Hostname 10.0.0.100
-  User vagrant
+  Hostname 164.41.86.15
+  Port 21
+  User root 
 
 Host boca
   Hostname 10.0.0.163
