@@ -24,13 +24,35 @@ service 'nginx' do
   action :reload
 end
 
-crt_domains = ''
+crt_domains = "-d #{node['crt_domains']['default']}"
 node['crt_domains'].each do |key, value|
-  crt_domains += " -d #{value}"
+  crt_domains += " -d #{value}" unless key == 'default'
 end
 
 execute 'create certificate' do
   command "./letsencrypt-auto certonly -a webroot --renew-by-default --email lappis.unb@gmail.com\
-           --webroot-path=/var/www/html#{crt_domains} --agree-tos"
+           --webroot-path=/var/www/html #{crt_domains} --agree-tos"
   cwd '/opt/letsencrypt'
+end
+
+execute 'Generate Strong Diffie-Hellman Group' do
+  command "sudo openssl dhparam -out /etc/ssl/certs/dhparam.pem 2048"
+end
+
+cookbook_file '/etc/nginx/sites-available/default' do
+  source 'nginx-ssl-config'
+  owner 'root'
+  group 'root'
+  mode '0644'
+end
+
+cookbook_file '/etc/nginx/nginx.conf' do
+  source 'nginx.conf'
+  owner 'root'
+  group 'root'
+  mode '0644'
+end
+
+service 'nginx' do
+  action :reload
 end
