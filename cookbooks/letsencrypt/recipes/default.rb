@@ -54,7 +54,7 @@ cookbook_file '/etc/nginx/sites-available/default' do
   mode '0644'
 end
 
-templates '/etc/nginx/nginx.conf' do
+template '/etc/nginx/nginx.conf' do
   source 'nginx.conf.erb'
   owner 'root'
   group 'root'
