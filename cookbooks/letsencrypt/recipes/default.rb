@@ -24,19 +24,27 @@ service 'nginx' do
   action :reload
 end
 
+file '/etc/lappis.services' do
+  action :create_if_missing
+end
+
 crt_domains = "-d #{node['crt_domains']['default']}"
 node['crt_domains'].each do |key, value|
   crt_domains += " -d #{value}" unless key == 'default'
 end
 
-execute 'create certificate' do
-  command "./letsencrypt-auto certonly -a webroot --renew-by-default --email lappis.unb@gmail.com\
-           --webroot-path=/var/www/html #{crt_domains} --agree-tos"
-  cwd '/opt/letsencrypt'
-end
+ruby_block 'Check current cert domains' do
+  block do
+    services = YAML.load_file('/etc/lappis.services')
+    if node['crt_domains'] != services
+      system("/opt/letsencrypt/letsencrypt-auto certonly -a webroot --renew-by-default --email lappis.unb@gmail.com\
+             --webroot-path=/var/www/html #{crt_domains} --agree-tos")
 
-execute 'Generate Strong Diffie-Hellman Group' do
-  command "sudo openssl dhparam -out /etc/ssl/certs/dhparam.pem 2048"
+      File.open('/etc/lappis.services','w'){ |f| f.write node['crt_domains'].to_hash.to_yaml }
+
+      system("sudo openssl dhparam -out /etc/ssl/certs/dhparam.pem 2048")
+    end
+  end
 end
 
 cookbook_file '/etc/nginx/sites-available/default' do
@@ -46,8 +54,8 @@ cookbook_file '/etc/nginx/sites-available/default' do
   mode '0644'
 end
 
-cookbook_file '/etc/nginx/nginx.conf' do
-  source 'nginx.conf'
+templates '/etc/nginx/nginx.conf' do
+  source 'nginx.conf.erb'
   owner 'root'
   group 'root'
   mode '0644'
