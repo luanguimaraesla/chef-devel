@@ -37,16 +37,14 @@ ruby_block 'Check current cert domains' do
   block do
     services = YAML.load_file('/etc/lappis.services')
     if node['crt_domains'] != services
-      exec("/opt/letsencrypt/letsencrypt-auto certonly -a webroot --renew-by-default --email lappis.unb@gmail.com\
+      system("/opt/letsencrypt/letsencrypt-auto certonly -a webroot --renew-by-default --email lappis.unb@gmail.com\
              --webroot-path=/var/www/html #{crt_domains} --agree-tos")
 
-      File.open('/etc/lappis.services','w'){ |f| f.write node['crt_domains'].to_yaml }
+      File.open('/etc/lappis.services','w'){ |f| f.write node['crt_domains'].to_hash.to_yaml }
+
+      system("sudo openssl dhparam -out /etc/ssl/certs/dhparam.pem 2048")
     end
   end
-end
-
-execute 'Generate Strong Diffie-Hellman Group' do
-  command "sudo openssl dhparam -out /etc/ssl/certs/dhparam.pem 2048"
 end
 
 cookbook_file '/etc/nginx/sites-available/default' do
