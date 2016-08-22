@@ -1,0 +1,10 @@
+server {
+  listen [::]:443;
+  listen 443;
+
+  server_name <%= @server_name %>;
+
+  location / {
+    proxy_pass http://<%= @server_ip %>:<%= @service_port %>;
+  }
+}
