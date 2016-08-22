@@ -1,2 +1,5 @@
-default: lappis.rocks
-rocketchat: chat.lappis.rocks
+default:
+  - server_name: lappis.rocks
+rocketchat:
+  - server_name: chat.lappis.rocks
+  - port: 3000
