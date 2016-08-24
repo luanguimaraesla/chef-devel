@@ -1,7 +1,0 @@
-default:
-  server_name: lappis.rocks
-  service_port: 80
-
-rocketchat:
-  server_name: chat.lappis.rocks
-  service_port: 3000
