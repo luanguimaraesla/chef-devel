@@ -21,7 +21,7 @@ cookbook_file '/etc/nginx/sites-available/default' do
 end
 
 service 'nginx' do
-  action :reload
+  action :restart
 end
 
 file '/etc/lappis.services' do
@@ -64,5 +64,5 @@ template '/etc/nginx/nginx.conf' do
 end
 
 service 'nginx' do
-  action :reload
+  action :restart
 end

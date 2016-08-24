@@ -2,7 +2,7 @@
 
 # Variables
 
-external_address = "http://mattermost.lappis.rocks/"
+external_address = node['crt_domains']['rocketchat']['server_name']
 
 # HOST CONFIGURATION
 
