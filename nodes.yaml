@@ -2,52 +2,7 @@ letsencrypt:
   run_list:
     - role[letsencrypt_server]
 
-boca:
-  run_list:
-    - role[boca_server]
-
 rocketchat:
   run_list:
     - role[rocketchat_server]
-    - role[hubot_server]
-
-squid:
-  run_list:
-    - role[squid_server]
-
-redmine:
-  run_list:
-    - role[redmine_server]
-
-polaris:
-  run_list:
-    - role[opennebula-frontend]
-    - role[opennebula-node]
-    - role[polaris] 
-
-solarian:
-  run_list:
-    - role[opennebula-node]
-    - role[solarian]
-
-imperius:
-  run_list:
-    - role[opennebula-node]
-    - role[imperius]
-
-firewall:
-  run_list:
-    - role[firewall]	
-
-backup-lappis:
-  run_list:
-    - role[backup-lappis]
-
-dotproject:
-  run_list:
-    - role[dotproject_server]
-
-mysql:
-  run_list:
-    - role[mysql]
-
+#   - role[hubot_server]
