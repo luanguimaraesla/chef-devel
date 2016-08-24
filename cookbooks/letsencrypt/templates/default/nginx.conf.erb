@@ -30,8 +30,8 @@ http {
 # SSL Settings
 ##
 
-  ssl_certificate /etc/letsencrypt/live/<%= node['crt_domains']['default'][0]['server_name'] %>/fullchain.pem;
-  ssl_certificate_key /etc/letsencrypt/live/<%= node['crt_domains']['default'][0]['server_name'] %>/privkey.pem;
+  ssl_certificate /etc/letsencrypt/live/<%= node['crt_domains']['default']['server_name'] %>/fullchain.pem;
+  ssl_certificate_key /etc/letsencrypt/live/<%= node['crt_domains']['default']['server_name'] %>/privkey.pem;
 
   ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
   ssl_prefer_server_ciphers on;

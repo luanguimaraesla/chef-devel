@@ -28,9 +28,9 @@ file '/etc/lappis.services' do
   action :create_if_missing
 end
 
-crt_domains = "-d #{node['crt_domains']['default'][0]['server_name']}"
+crt_domains = "-d #{node['crt_domains']['default']['server_name']}"
 node['crt_domains'].each do |key, value|
-  crt_domains += " -d #{value[0]['server_name']}" unless key == 'default'
+  crt_domains += " -d #{value['server_name']}" unless key == 'default'
 end
 
 ruby_block 'Check current cert domains' do
