@@ -28,9 +28,9 @@ file '/etc/lappis.services' do
   action :create_if_missing
 end
 
-crt_domains = "-d #{node['crt_domains']['default']}"
+crt_domains = "-d #{node['crt_domains']['default'][0]['server_name']}"
 node['crt_domains'].each do |key, value|
-  crt_domains += " -d #{value}" unless key == 'default'
+  crt_domains += " -d #{value[0]['server_name']}" unless key == 'default'
 end
 
 ruby_block 'Check current cert domains' do
@@ -39,9 +39,11 @@ ruby_block 'Check current cert domains' do
     if node['crt_domains'] != services
       system("/opt/letsencrypt/letsencrypt-auto certonly -a webroot --renew-by-default --email lappis.unb@gmail.com\
              --webroot-path=/var/www/html #{crt_domains} --agree-tos")
-
+	puts "*"*80
+	puts node['crt_domains']
+	puts services
+	puts "-"*80
       File.open('/etc/lappis.services','w'){ |f| f.write node['crt_domains'].to_hash.to_yaml }
-
       system("sudo openssl dhparam -out /etc/ssl/certs/dhparam.pem 2048")
     end
   end
