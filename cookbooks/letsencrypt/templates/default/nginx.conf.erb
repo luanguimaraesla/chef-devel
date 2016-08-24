@@ -70,6 +70,10 @@ http {
 
   include /etc/nginx/conf.d/*.conf;
   include /etc/nginx/sites-enabled/*;
+
+  upstream backend {
+    server 127.0.0.1:<%= node['crt_domains']['rocketchat']['service_port'] %>;
+  }
 }
 
 
