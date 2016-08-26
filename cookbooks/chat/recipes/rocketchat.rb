@@ -2,7 +2,7 @@
 
 # Variables
 
-external_address = "http://mattermost.lappis.rocks/"
+external_address = "https://chat.lappis.rocks/"
 
 # HOST CONFIGURATION
 
