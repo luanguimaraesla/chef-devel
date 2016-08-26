@@ -24,14 +24,29 @@ execute 'apt-get update'
 
 package 'docker.io'
 
-execute 'docker run hubot' do
-	command "docker run -i -e ROCKETCHAT_URL=http://#{ node['peers']['rocketchat'] }:3000 \
-    -e ROCKETCHAT_ROOM= \
-    -e LISTEN_ON_ALL_PUBLIC=true \
-    -e ROCKETCHAT_USER=botson \
-    -e ROCKETCHAT_PASSWORD=#{ node['passwd']['hubot'] } \
-    -e ROCKETCHAT_AUTH=password \
-    -e BOT_NAME=hubot \
-    -e EXTERNAL_SCRIPTS=hubot-pugme,hubot-help \
-    rocketchat/hubot-rocketchat"
+template '/etc/init.d/hubot' do
+  source 'hubot/hubot.erb'
+  mode '0755'
+  variables({
+    rocketchat_url: "http://#{node['peers']['rocketchat']}:\
+                    #{node['crt_domains']['rocketchat']['service_port']}",
+    rocketchat_room: node.rocketchat.initd_hubot.rocketchat_room,
+    listen_on_all_public: node.rocketchat.initd_hubot.listen_on_all_public,
+    rocketchat_user: node.rocketchat.initd_hubot.rocketchat_user,
+    rocketchat_password: node['passwd']['hubot'],
+    rocketchat_auth: node.rocketchat.initd_hubot.rocketchat_auth,
+    bot_name: node.rocketchat.initd_hubot.bot_name,
+    external_scripts: node.rocketchat.initd_hubot.external_scripts
+  })
+end
+
+cookbook_file '/lib/systemd/system/hubot.service' do
+  source 'hubot/hubot.service'
+  owner 'root'
+  group 'root'
+  mode '0644'
+end
+
+service 'hubot' do
+  action [:restart, :enable]
 end
