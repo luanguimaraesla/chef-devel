@@ -9,4 +9,4 @@ default[:rocketchat][:initd_hubot][:rocketchat_user] = 'botson'
 default[:rocketchat][:initd_hubot][:rocketchat_password] = node['passwd']['hubot']
 default[:rocketchat][:initd_hubot][:rocketchat_auth] = 'password'
 default[:rocketchat][:initd_hubot][:bot_name] = 'botson'
-default[:rocketchat][:initd_hubot][:external_scripts] = 'hubot-pugme, hubot-help'
+default[:rocketchat][:initd_hubot][:external_scripts] = 'hubot-pugme,hubot-help'

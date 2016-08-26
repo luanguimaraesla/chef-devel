@@ -28,8 +28,7 @@ template '/etc/init.d/hubot' do
   source 'hubot/hubot.erb'
   mode '0755'
   variables({
-    rocketchat_url: "http://#{node['peers']['rocketchat']}:\
-                    #{node['crt_domains']['rocketchat']['service_port']}",
+    rocketchat_url: "http://#{node['peers']['rocketchat']}:#{node['crt_domains']['rocketchat']['service_port']}",
     rocketchat_room: node.rocketchat.initd_hubot.rocketchat_room,
     listen_on_all_public: node.rocketchat.initd_hubot.listen_on_all_public,
     rocketchat_user: node.rocketchat.initd_hubot.rocketchat_user,
