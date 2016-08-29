@@ -5,3 +5,7 @@ default:
 rocketchat:
   server_name: chat.lappis.rocks
   service_port: 3000
+
+boca:
+  server_name: boca.lappis.rocks
+  service_port: 80
