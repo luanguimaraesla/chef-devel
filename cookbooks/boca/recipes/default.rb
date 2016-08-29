@@ -155,6 +155,14 @@ print("FINISHING...")
   EOH
 end
 
+execute 'move default html folder' do
+  command 'mv /var/www/html /var/www/html.old'
+end
+
+link '/var/www/html' do
+  to "/var/www/boca-#{boca_version}/src"
+end
+
 service "apache2" do
   action :restart
 end

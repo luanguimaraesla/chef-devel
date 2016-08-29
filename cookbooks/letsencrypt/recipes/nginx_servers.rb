@@ -3,8 +3,8 @@ node['crt_domains'].each do | server, params |
     source 'server_conf.erb'
     variables({
       server_ip:    node['peers']["#{server}"] || node['peers']['letsencrypt'],
-      service_port: params[0]['service_port'],
-      server_name:  params[0]['server_name']
+      service_port: params['service_port'],
+      server_name:  params['server_name']
     })
     mode 0644
   end
