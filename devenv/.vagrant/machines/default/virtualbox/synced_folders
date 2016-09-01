@@ -1,0 +1,1 @@
+{"rsync":{"/vagrant":{"type":"rsync","guestpath":"/vagrant","hostpath":"/home/luan/Storage/UnB/GPP/chef-crab/devenv","disabled":false,"owner":"vagrant","group":"vagrant"}}}

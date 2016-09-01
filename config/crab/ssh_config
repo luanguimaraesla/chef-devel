@@ -5,3 +5,7 @@ Host letsencrypt
 Host rocketchat
   Hostname 45.55.190.228
   User root
+
+Host devenv
+  Hostname 10.10.10.10
+  User vagrant
