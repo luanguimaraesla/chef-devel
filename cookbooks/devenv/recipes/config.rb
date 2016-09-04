@@ -2,7 +2,7 @@
 # a virtual machine vagrant debian jessie 8.5
 # created by Luan Guimarães Lacerda
 
-execu 'apt-get update'
+execute 'apt-get update'
 
 necessary_packages = %w(curl git vim nodejs)
 
@@ -11,7 +11,7 @@ necessary_packages.each do | pkg_name |
 end
 
 execute 'add gpg key' do
-  command 'gpg2 --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3'
+  command 'gpg --keyserver hkp://keys.gnupg.net:80 --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3'
 end
 
 execute 'installing the newest version of ruby via curl' do
@@ -20,20 +20,31 @@ end
 
 execute 'update ruby gem system' do
   command 'gem update --system'
+  user 'vagrant'
 end
 
 execute 'update all stale gems' do
   command 'gem update'
+  user 'vagrant'
+end
+
+execute 'create gemset' do
+  command 'rvm gemset create owla'
+  user 'vagrant'
+end
+
+execute 'use gemset' do
+  command 'rvm use 2.3.1@owla'
 end
 
 package 'ruby-dev'
 
-necessary_gem_packages = %w(bundler nokogiri)
-
-necessary_gem_packages.each do | gpkg_name |
-  gem_package gpkg_name
+execute 'gem install rails' do
+  command 'gem install rails -v 5.0.0.1'
+  user 'vagrant'
 end
 
-execute 'install rails using gem set just for the current release' do
-  command 'rvm use ruby-2.3.1@rails5.0 --create'
+execute 'gem install bundler' do
+  command 'gem install bundler'
+  user 'vagrant'
 end
