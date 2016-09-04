@@ -31,47 +31,30 @@ ruby_block "clear_home for CHEF-3940" do
   end
 end
 
-#bash 'install ruby via curl' do
-#  code '\curl -L https://get.rvm.io | bash -s stable --ruby'
-#  user current_user
-#  cwd home_dir
-#end
-
-#execute 'installing the newest version of ruby via curl' do
-#  command '\curl -L https://get.rvm.io | bash -s stable --ruby'
-#  user current_user
-#  cwd home_dir
-#end
-
-execute 'update ruby gem system' do
-  command 'gem update --system'
+bash 'install ruby via curl' do
+  code '\curl -L https://get.rvm.io | bash -s stable --ruby'
   user current_user
+  cwd home_dir
+end
+
+execute 'installing the newest version of ruby via curl' do
+  command '\curl -L https://get.rvm.io | bash -s stable --ruby'
+  user current_user
+  cwd home_dir
 end
 
 execute 'update all stale gems' do
-  command 'gem update'
-  user current_user
-end
-
-execute 'create gemset' do
-  command 'rvm gemset create owla'
-  user current_user
-end
-
-execute 'use gemset' do
-  command 'rvm use 2.3.1@owla'
+  command "runuser -l #{current_user} -c 'gem update'"
 end
 
 package 'ruby-dev'
 
 execute 'gem install rails' do
-  command 'gem install rails -v 5.0.0.1'
-  user current_user
+  command "runuser -l #{current_user} -c 'gem install rails -v 5.0.0.1'"
 end
 
 execute 'gem install bundler' do
-  command 'gem install bundler'
-  user current_user
+  command "runuser -l #{current_user} -c 'gem install bundler'"
 end
 
 ruby_block "reset home" do
