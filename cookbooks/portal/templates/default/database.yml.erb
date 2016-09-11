@@ -1,0 +1,10 @@
+# File created with Chef. Make the changes on the cookbook
+production:
+  adapter: postgresql
+  encoding: unicode
+  database: noosfero
+  <% if not node['local'] %>
+  host: <%= node['peers']['portal'] %>
+  <% else %>
+  <% end %>
+  user: noosfero
