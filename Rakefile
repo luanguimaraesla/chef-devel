@@ -7,6 +7,7 @@ passwd_file = "config/#{environment}/passwd.yaml"
 certificate_domains_file = "config/#{environment}/certificate_domains.yaml"
 
 ENV['CHAKE_SSH_CONFIG'] = ssh_config_file
+ENV['CHAKE_RSYNC_OPTIONS'] = "--exclude 'backups'"
 
 require "chake"
 
@@ -19,3 +20,5 @@ $nodes.each do |node|
   node.data['passwd'] = passwords
   node.data['crt_domains'] = crt_domains
 end
+
+Rake.add_rakelib 'lib/tasks'
