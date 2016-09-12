@@ -60,21 +60,35 @@ execute "initiate the replica set" do
   command 'mongo --eval "rs.initiate()"'
 end
 
+rocketchat_home = '/home/rocketchat'
+rocketchat_user = 'rocketchat'
+
+# Create rocketchat user
+user rocketchat_user do
+  uid '0'
+  gid '0'
+  home rocketchat_home
+  shell '/bin/bash'
+end
+
 # INSTALL ROCKET.CHAT
 
 execute "download stable version of rocket.chat" do
-  command "curl -L https://rocket.chat/releases/latest/download -o /root/rocket.chat.tgz"
+  command "curl -L https://rocket.chat/releases/latest/download -o #{rocketchat_home}/rocket.chat.tgz"
+  user rocketchat_user
 end
 
 
 execute "untar the binary release" do
-  cwd "/root"
+  cwd rocketchat_home
   command "tar zxvf rocket.chat.tgz"
 #  command "rm rocket.chat.tgz"
+  user rocketchat_user
 end
 
 execute "remove old Rocket.Chat dir" do
-  command "rm -rf /root/Rocket.Chat/"
+  command "rm -rf #{rocketchat_home}/Rocket.Chat/"
+  user rocketchat_user
 end
 
 execute "fix npm missing package" do
@@ -82,21 +96,26 @@ execute "fix npm missing package" do
 end
 
 execute "rename Rocket.Chat directory" do
-  cwd "/root/"
+  cwd rocketchat_home
   command "mv bundle Rocket.Chat"
+  user rocketchat_user
 end
 
 execute "mkdir of npm modules" do
-  command "mkdir -p /root/Rocket.Chat/programs/server/node_modules/fibers/"
+  command "mkdir -p #{rocketchat_home}/Rocket.Chat/programs/server/node_modules/fibers/"
+  user rocketchat_user
 end
 
 execute "copy fiber binary" do
-  command "cp -ar /usr/local/lib/node_modules/fibers/ /root/Rocket.Chat/programs/server/node_modules/"
+  command "cp -ar /usr/local/lib/node_modules/fibers/ #{rocketchat_home}/Rocket.Chat/programs/server/node_modules/"
+  user rocketchat_user
 end
 
 execute "install Rocket.Chat" do
-  cwd "/root/Rocket.Chat/programs/server"
+  cwd "#{rocketchat_home}/Rocket.Chat/programs/server"
   command "npm install"
+  user "rocketchat"
+  user rocketchat_user
 end
 
 template '/etc/init.d/rocketchat' do
