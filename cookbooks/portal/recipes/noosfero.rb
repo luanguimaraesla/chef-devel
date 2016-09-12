@@ -5,7 +5,6 @@
 
 cookbook_file '/etc/apt/sources.list.d/noosfero.list'
 execute 'apt-get update'
-execute 'aptitude update'
 
 user 'noosfero'
 

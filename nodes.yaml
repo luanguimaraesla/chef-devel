@@ -53,5 +53,5 @@ mysql:
 
 portal:
   run_list:
-    # - role[boca_server]
+    - role[portal_server]
 
