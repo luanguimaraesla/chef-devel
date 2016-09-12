@@ -28,12 +28,44 @@ packages.each do |p|
   package p
 end
 
+rocketchat_home = '/home/rocketchat'
+rocketchat_user = 'rocketchat'
+
+# Create rocketchat user
+user rocketchat_user do
+	supports manage_home: true
+  uid 1234
+  gid 'users'
+  home rocketchat_home
+  shell '/bin/bash'
+end
+
+# Create npm group
+group 'npm' do
+  members rocketchat_user
+  append true
+end
+
+old_home = ENV['HOME']
+
+ruby_block "clear_home for CHEF-3940" do 
+  block do 
+      ENV['HOME'] = Etc.getpwnam(rocketchat_user).dir
+  end
+end
+
+# Configuring local npm settings
+
+execute "change permission @ /usr/local" do
+  command "chown -R root:npm /usr/local && chmod -R 775 /usr/local"
+end
+
 execute "install tool to change node version" do
-  command "npm install -g n"
+  command "runuser -l rocketchat -c 'npm install -g n'"
 end
 
 execute "change node version to the least" do
-  command "n 0.10.40"
+  command "runuser -l rocketchat -c 'n 0.10.40'"
 end
 
 # Configure host alias for mongo
@@ -58,17 +90,6 @@ end
 
 execute "initiate the replica set" do
   command 'mongo --eval "rs.initiate()"'
-end
-
-rocketchat_home = '/home/rocketchat'
-rocketchat_user = 'rocketchat'
-
-# Create rocketchat user
-user rocketchat_user do
-  uid '0'
-  gid '0'
-  home rocketchat_home
-  shell '/bin/bash'
 end
 
 # INSTALL ROCKET.CHAT
@@ -114,8 +135,7 @@ end
 execute "install Rocket.Chat" do
   cwd "#{rocketchat_home}/Rocket.Chat/programs/server"
   command "npm install"
-  user "rocketchat"
-  user rocketchat_user
+	user rocketchat_user
 end
 
 template '/etc/init.d/rocketchat' do
@@ -138,4 +158,10 @@ end
 
 service 'rocketchat' do
   action [:restart, :enable]
+end
+
+ruby_block "reset home" do
+  block do
+    ENV['HOME'] = old_home
+  end
 end

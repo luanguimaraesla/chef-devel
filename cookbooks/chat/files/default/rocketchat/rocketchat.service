@@ -5,8 +5,8 @@ Description=Rocket.Chat
 Type=simple
 ExecStart=/etc/init.d/rocketchat start
 ExecStop=/etc/init.d/rocketchat stop
-User=rocketchat
-Group=rocketchat
+User=root
+Group=root
 Restart=on-failure
 
 [Install]
