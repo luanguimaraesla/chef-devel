@@ -3,5 +3,6 @@ description "Install and configure Rocket.Chat server"
 
 run_list *[
   'recipe[basics]',
-  'recipe[chat::rocketchat]'
+  'recipe[chat::rocketchat]',
+  'recipe[chat::sslfix]'
 ]
