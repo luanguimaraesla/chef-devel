@@ -6,10 +6,10 @@
 #
 # Database administrative login by Unix domain socket
 local   all             postgres                                peer
-<% if not node['local'] %>
-local   all             noosfero                                trust
+<% if not node['remote_db'] %>
+host    all             noosfero        <%= node['peers']['noosfero'] %>/32    trust
 <% else %>
-host    all             noosfero        <%= node['peers']['portal'] %>/32    trust
+local   all             noosfero                                trust
 <% end %>
 
 
