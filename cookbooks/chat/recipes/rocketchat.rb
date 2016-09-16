@@ -1,8 +1,10 @@
 # Recipe to install and configure the Rocket.Chat
 
-# Variables
+# VARIABLES
 
 external_address = "https://chat.lappis.rocks/"
+rocketchat_home = '/home/rocketchat'
+rocketchat_user = 'rocketchat'
 
 # HOST CONFIGURATION
 
@@ -21,17 +23,12 @@ execute "update apt" do
   command "apt-get update"
 end
 
-
 packages = %w(tmux mongodb-org curl graphicsmagick npm nodejs build-essential)
 
 packages.each do |p|
   package p
 end
 
-rocketchat_home = '/home/rocketchat'
-rocketchat_user = 'rocketchat'
-
-# Create rocketchat user
 user rocketchat_user do
 	supports manage_home: true
   uid 1234
@@ -40,7 +37,6 @@ user rocketchat_user do
   shell '/bin/bash'
 end
 
-# Create npm group
 group 'npm' do
   members rocketchat_user
   append true
@@ -157,7 +153,7 @@ cookbook_file '/lib/systemd/system/rocketchat.service' do
 end
 
 service 'rocketchat' do
-  action [:restart, :enable]
+  action [:restart]
 end
 
 ruby_block "reset home" do
