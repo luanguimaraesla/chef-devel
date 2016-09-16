@@ -15,11 +15,11 @@ case "$1" in
     mongo --eval "rs.initiate()"
 
     echo "Starting Rocket.Chat"
-    node /root/Rocket.Chat/main.js
+    sudo -E -u rocketchat node /home/rocketchat/Rocket.Chat/main.js
     ;;
   stop)
     echo "Stopping Rocket.Chat"
-    kill -9 $(ps aux | grep "node main.js" | awk {'print $2'})
+    pkill -9 node
     ;;
   *)
     echo "Usage: /etc/init.d/ {start|stop}"
