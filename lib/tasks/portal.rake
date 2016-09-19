@@ -18,7 +18,7 @@ namespace :portal do
       'sudo systemctl stop noosfero',
       'sudo -u postgres dropdb noosfero 2> /dev/null',
       'sudo -u postgres createdb noosfero --owner noosfero 2> /dev/null',
-      'cd /usr/share/noosfero ; yes y | RAILS_ENV=production sudo -u noosfero bundle exec rake restore BACKUP=/vagrant/backups/portal/portal_backup.tar.gz 1> /dev/null 2>/dev/null',
+      'cd /usr/share/noosfero ; yes y | RAILS_ENV=production sudo -u noosfero bundle exec rake restore BACKUP=/tmp/backups/portal/portal_backup.tar.gz 1> /dev/null 2>/dev/null',
       'sudo systemctl start noosfero'
     ]
     routine.each do |cmd|
