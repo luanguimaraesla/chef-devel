@@ -17,5 +17,5 @@ node['crt_domains'].each do | server, params |
 end
 
 service 'nginx' do
-  action :reload
+  action :restart
 end

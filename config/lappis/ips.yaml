@@ -12,4 +12,5 @@ mysql: 10.0.0.143
 dotproject: 10.0.0.81
 services: 10.0.0.135
 moodle: 10.0.0.5
+portal: 10.0.0.133
 codeschool: 10.0.0.137

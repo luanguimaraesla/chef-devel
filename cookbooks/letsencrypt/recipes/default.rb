@@ -20,8 +20,13 @@ cookbook_file '/etc/nginx/sites-available/default' do
   mode '0644'
 end
 
+execute 'remove server files' do
+  command 'rm *-server'
+  cwd '/etc/nginx/sites-enabled/'
+end
+
 service 'nginx' do
-  action :reload
+  action :restart
 end
 
 file '/etc/lappis.services' do
@@ -60,5 +65,5 @@ template '/etc/nginx/nginx.conf' do
 end
 
 service 'nginx' do
-  action :reload
+  action :restart
 end
