@@ -9,3 +9,7 @@ rocketchat:
 boca:
   server_name: boca.lappis.rocks
   service_port: 80
+
+codeschool:
+  server_name: codeschool.lappis.rocks
+  service_port: 80
