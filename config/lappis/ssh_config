@@ -47,10 +47,11 @@ Host rocketchat
   Hostname 10.0.0.169
   User lappis
 
+Host portal
+  Hostname 10.0.0.153
+  User lappis
+
 Host codeschool
   Hostname 10.0.0.137
   User root
 
-Host portal
-  Hostname 10.0.0.133
-  User root

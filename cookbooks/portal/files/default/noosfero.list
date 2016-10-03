@@ -1,0 +1,3 @@
+# Noosfero
+deb http://download.noosfero.org/debian/jessie ./
+deb-src http://download.noosfero.org/debian/jessie ./
