@@ -6,4 +6,5 @@ run_list *[
   'recipe[postgresql::service]',
   'recipe[portal::database]',
   'recipe[portal::noosfero]',
+  'recipe[portal::backup]',
 ]
