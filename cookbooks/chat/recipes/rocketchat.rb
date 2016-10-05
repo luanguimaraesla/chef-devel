@@ -61,7 +61,7 @@ execute "install tool to change node version" do
 end
 
 execute "change node version to the least" do
-  command "runuser -l rocketchat -c 'n 0.10.40'"
+  command "runuser -l rocketchat -c 'n 4.5'"
 end
 
 # Configure host alias for mongo
@@ -108,9 +108,9 @@ execute "remove old Rocket.Chat dir" do
   user rocketchat_user
 end
 
-execute "fix npm missing package" do
-  command "npm install fibers@1.0.5 -g"
-end
+#execute "fix npm missing package" do
+#  command "runuser -l #{rocketchat_user} -c 'npm install fibers@1.0.13 -g'"
+#end
 
 execute "rename Rocket.Chat directory" do
   cwd rocketchat_home
