@@ -2,7 +2,7 @@
 
 # VARIABLES
 
-external_address = "https://chat.lappis.rocks/"
+external_address = "https://chat.crab.solutions/"
 rocketchat_home = '/home/rocketchat'
 rocketchat_user = 'rocketchat'
 
