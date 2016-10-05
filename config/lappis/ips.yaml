@@ -1,0 +1,16 @@
+boca: 10.0.0.11
+letsencrypt: 10.0.0.100
+rocketchat: 10.0.0.169
+squid: 10.0.0.145
+redmine: 10.0.0.141
+solarian: 10.0.0.2
+polaris: 10.0.0.7
+imperius: 10.0.0.5
+firewall: 10.0.0.150
+backup-lappis: 10.0.0.156
+mysql: 10.0.0.143 
+dotproject: 10.0.0.81
+services: 10.0.0.135
+moodle: 10.0.0.6
+portal: 10.0.0.153
+codeschool: 10.0.0.137

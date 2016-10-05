@@ -20,6 +20,11 @@ cookbook_file '/etc/nginx/sites-available/default' do
   mode '0644'
 end
 
+execute 'remove server files' do
+  command 'rm *-server'
+  cwd '/etc/nginx/sites-enabled/'
+end
+
 service 'nginx' do
   action :restart
 end
@@ -39,10 +44,6 @@ ruby_block 'Check current cert domains' do
     if node['crt_domains'] != services
       system("/opt/letsencrypt/letsencrypt-auto certonly -a webroot --renew-by-default --email lappis.unb@gmail.com\
              --webroot-path=/var/www/html #{crt_domains} --agree-tos")
-	puts "*"*80
-	puts node['crt_domains']
-	puts services
-	puts "-"*80
       File.open('/etc/lappis.services','w'){ |f| f.write node['crt_domains'].to_hash.to_yaml }
       system("sudo openssl dhparam -out /etc/ssl/certs/dhparam.pem 2048")
     end
