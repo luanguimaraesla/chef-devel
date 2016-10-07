@@ -6,11 +6,8 @@
 #
 # Database administrative login by Unix domain socket
 local   all             postgres                                peer
-<% if not node['remote_db'] %>
-host    all             noosfero        <%= node['peers']['noosfero'] %>/32    trust
-<% else %>
-local   all             noosfero                                trust
-<% end %>
+local   all             <%= @user_dev %>                        trust
+local   all             <%= @user_app %>                        trust
 
 
 # TYPE  DATABASE        USER            ADDRESS                 METHOD
