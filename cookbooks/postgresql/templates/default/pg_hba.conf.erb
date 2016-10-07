@@ -5,7 +5,7 @@
 # maintenance (custom daily cronjobs, replication, and similar tasks).
 #
 # Database administrative login by Unix domain socket
-local   all             postgres                                peer
+local   all             postgres                                trust
 local   all             <%= @user_dev %>                        trust
 local   all             <%= @user_app %>                        trust
 

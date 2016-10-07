@@ -18,9 +18,15 @@ service 'postgresql' do
   action [:enable, :start]
 end
 
-execute 'creating postgres\' users for Owla' do
-  command "createuser #{owla_user} with createdb login password #{node['passwd']['postgresql']};"
-  command "createuser #{owla_vagrant} with createdb login password #{node['passwd']['postgresql']};"
+execute "creating postgres' users for #{owla_user}" do
+  psql_command = "CREATE USER #{owla_user} with createdb login password '#{node['passwd']['postgresql']}'"
+  command "psql -U postgres -c #{ '"' + psql_command + '"' }"
+  user 'postgres'
+end
+
+execute "creating postgres\' users for #{vagrant_user}" do
+  psql_command = "CREATE USER #{vagrant_user} with createdb login password '#{node['passwd']['postgresql']}'"
+  command "psql -U postgres -c #{ '"' + psql_command + '"' }"
   user 'postgres'
 end
 
