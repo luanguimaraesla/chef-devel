@@ -8,5 +8,5 @@ rocketchat:
 
 devenv:
   run_list:
-#    - role[devenv]
+    - role[devenv]
     - role[database_server]

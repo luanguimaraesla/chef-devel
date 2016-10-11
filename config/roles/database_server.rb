@@ -3,5 +3,6 @@ description "Install and configure postgres"
 
 run_list *[
   'recipe[basics]',
-  'recipe[postgresql]'
+  'recipe[database::postgresql]',
+  'recipe[database::redis]'
 ]

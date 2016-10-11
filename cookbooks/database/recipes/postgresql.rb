@@ -1,4 +1,5 @@
 package 'postgresql'
+package 'libpq-dev'
 
 vagrant_user = 'vagrant'
 owla_user = 'owla'
@@ -22,12 +23,14 @@ execute "creating postgres' users for #{owla_user}" do
   psql_command = "CREATE USER #{owla_user} with createdb login password '#{node['passwd']['postgresql']}'"
   command "psql -U postgres -c #{ '"' + psql_command + '"' }"
   user 'postgres'
+  ignore_failure true
 end
 
 execute "creating postgres\' users for #{vagrant_user}" do
   psql_command = "CREATE USER #{vagrant_user} with createdb login password '#{node['passwd']['postgresql']}'"
   command "psql -U postgres -c #{ '"' + psql_command + '"' }"
   user 'postgres'
+  ignore_failure true
 end
 
 service 'postgresql' do
