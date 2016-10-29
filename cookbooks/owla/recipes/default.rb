@@ -1,4 +1,4 @@
-# Recipe to install and configure docsplit
+# Install and configure docsplit
 # Luan Guimarães e Thalisson Barreto
 # Oct 28 2016
 
@@ -9,3 +9,9 @@ necessary_packages = %w(graphicsmagick poppler-utils poppler-data ghostscript te
 necessary_packages.each do | pkg |
   package pkg
 end
+
+# Install imagemagick
+# Luan Guimarães
+# Oct 29 2016
+
+package 'imagemagick'

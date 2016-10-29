@@ -3,7 +3,6 @@
 # created by Luan Guimarães Lacerda
 current_user = 'vagrant'
 
-
 execute 'apt-get update'
 
 necessary_packages = %w(curl git vim nodejs)
